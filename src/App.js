@@ -43,6 +43,7 @@ function App() {
   const [password, setPassword] = useState('')
   const [email, setEmail] = useState('') 
   const [user, setUser] = useState(null)
+  const [upload, setupload] = useState(false)
 
   const [modalStyle] = React.useState(getModalStyle);
 
@@ -67,8 +68,13 @@ function App() {
   },[user, username])
 
   useEffect(() => {
+
+    console.log("Under use effect");
+
     db.collection('posts').orderBy('timestamp', 'desc').onSnapshot((snapshot)=>{
       
+      console.log("Snapshot length >>>", snapshot.docs.length);
+
       setposts(
           snapshot.docs.map(doc => ({
           id: doc.id,
@@ -77,7 +83,7 @@ function App() {
       )
 
     })
-  })
+  },[])
 
   const signIn = (event) => {
     event.preventDefault()
@@ -104,11 +110,12 @@ function App() {
     setopen(false)
 
   }
+
+  console.log("Posts >>> ", posts);
   
   return (
     <div className="app">
       
-
       <Modal
         open={open}
         onClose={() => setopen(false)}
@@ -152,6 +159,15 @@ function App() {
           src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
           alt=""
         />
+        <Button 
+          className="postStuff"
+          onClick={() => setupload(true)}
+          variant="contained" 
+          color="secondary"
+        >
+          ➡ Click here to post stuff !!! ⬅
+        </Button>
+
         {
             user ? 
                   <Button onClick={()=> auth.signOut()}>Signout</Button>
@@ -168,44 +184,56 @@ function App() {
       
 
       <div className="app__posts">
+
         <div className="app__postsLeft">
           {
-            posts.map(({id, post}) => {
-              return (
-                <Post
-                  key = {id} 
-                  postId = {id}
-                  user = {user}
-                  username = {post.username}
-                  imageUrl = {post.imageUrl}
-                  caption = {post.caption}
-                />
-              )
-            })
-          }
+              posts.map(({id, post}) => {
+                return (
+                  <Post
+                    key = {id} 
+                    postId = {id}
+                    user = {user}
+                    username = {post.username}
+                    imageUrl = {post.imageUrl}
+                    caption = {post.caption}
+                  />
+                )
+              })
+            }
         </div>
 
         <div className="app__postsRight">
-          <InstagramEmbed
-            url='https://www.instagram.com/p/B8tb_w5HCtW/'
-            maxWidth={320}
-            hideCaption={false}
-            containerTagName='div'
-            protocol=''
-            injectScript
-            onLoading={() => {}}
-            onSuccess={() => {}}
-            onAfterRender={() => {}}
-            onFailure={() => {}}
-          />  
+          <div className="instagramEmbed">
+            <InstagramEmbed
+              url='https://www.instagram.com/p/CC698rRJZko/'
+          
+              hideCaption={false}
+              containerTagName='div'
+              protocol=''
+              injectScript
+              onLoading={() => {}}
+              onSuccess={() => {}}
+              onAfterRender={() => {}}
+              onFailure={() => {}}
+            />  
+          </div>
         </div>  
       </div>
 
-      {
-        (user?.displayName) 
-          ? <ImageUpload username={user.displayName}/>
-          : <h3>You gotta login to post !!!!</h3>
-      }
+      <Modal
+        open={upload}
+        onClose={() => setupload(false)}
+      >
+        <div style={modalStyle} className={classes.paper}>
+        {
+          (user?.displayName) 
+            ? <ImageUpload afterUpload={() => setupload(false)} username={user.displayName}/>
+            : <h3>Login required for posting stuff !!!!</h3>
+        }
+        </div>
+        
+      </Modal>
+      
     </div>
   );
 }

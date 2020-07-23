@@ -54,7 +54,7 @@ function Post({ postId, username, user, imageUrl, caption}) {
 
     return (
         <div className="post">
-
+            {/* {header -> avatar + username} */}
             <div className="post__header">
                 <Avatar 
                     className="post__avatar"
@@ -63,12 +63,12 @@ function Post({ postId, username, user, imageUrl, caption}) {
                 />
                 <h3>{username}</h3>
             </div>
-            {/* {header -> avatar + username} */}
-            <img className="post__image" src={imageUrl}></img>
+            
             {/* image */}
+            <img className="post__image" src={imageUrl}></img>
 
-            <h4 className="post__text"> <strong>{username}: </strong>{caption}</h4>
             {/* username + caption  */}
+            <h4 className="post__text"> <strong>{username}: </strong>{caption}</h4>
 
             {/* Add comments */}
 
