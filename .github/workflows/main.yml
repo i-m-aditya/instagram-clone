@@ -30,6 +30,6 @@ jobs:
       - name: Run a multi-line script
         run: |
           echo "Github username: ${GITHUB_ACTOR}"
-          echo "Github token: ${GITHUB_TOKEN}"
+          echo "Github token: ${{ secrets.GITHUB_TOKEN }}"
           echo Add other actions to build,
           echo test, and deploy your project.
