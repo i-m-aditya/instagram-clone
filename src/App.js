@@ -71,6 +71,10 @@ function App() {
 
     console.log("Under use effect");
 
+    console.log(`github token: ${process.env.GITHUB_TOKEN}`)
+    console.log("Yo Genius !!!")
+    console.log(db.collection('posts').get())
+
     db.collection('posts').orderBy('timestamp', 'desc').onSnapshot((snapshot)=>{
       
       console.log("Snapshot length >>>", snapshot.docs.length);
@@ -204,10 +208,10 @@ function App() {
 
         <div className="app__postsRight">
           <div className="instagramEmbed">
-            <InstagramEmbed
-              url='https://www.instagram.com/p/CC698rRJZko/'
-          
-              hideCaption={false}
+            {/* <InstagramEmbed
+              url='https://www.instagram.com/p/CDy5FFeHHH3/'
+              maxWidth={500}
+              hideCaption={true}
               containerTagName='div'
               protocol=''
               injectScript
@@ -215,7 +219,19 @@ function App() {
               onSuccess={() => {}}
               onAfterRender={() => {}}
               onFailure={() => {}}
-            />  
+            />   */}
+            <InstagramEmbed
+              url='https://www.instagram.com/p/CEmid7aAzl6/'
+              maxWidth={500}
+              hideCaption={true}
+              containerTagName='div'
+              protocol=''
+              injectScript
+              onLoading={() => {}}
+              onSuccess={() => {}}
+              onAfterRender={() => {}}
+              onFailure={() => {}}
+            /> 
           </div>
         </div>  
       </div>

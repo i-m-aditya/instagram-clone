@@ -44,6 +44,11 @@
 }
 .app__postsLeft{
     margin-right: 30px;
+    max-width: 500px;
+}
+
+.app__postsRight {
+    max-height: 200px;
 }
 .instagramEmbed{
     width: 700px;

@@ -47,13 +47,13 @@ function ImageUpload({username, afterUpload}) {
                             caption: caption,
                             imageUrl: url,
                             username: username
-
                         })
 
                         setCaption('')
                         setProgress(0)
                         setImage(null)
                         afterUpload()
+                        console.log("Image Uploaded successfully !!!");
                     })
             }
 
